@@ -2,3 +2,4 @@
 /data/butterfly-dataset.zip
 /data/image_arrays.npy
 /data/label_arrays.npy
+/models/butterfly_classifier.h5
