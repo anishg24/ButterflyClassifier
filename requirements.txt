@@ -1,3 +1,5 @@
+matplotlib
+scikit-image
 pandas
 numpy
 scikit-learn

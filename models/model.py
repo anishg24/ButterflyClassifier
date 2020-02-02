@@ -1,38 +1,31 @@
 import keras as K
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-from sklearn.model_selection import train_test_split
 import numpy as np
-import pandas as pd
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Dense, Dropout, Flatten
+from keras.models import Sequential
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelBinarizer
 
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 NUM_CLASSES = 10
 EPOCHS = 12
 img_rows, img_cols = 128, 128
 input_shape = (img_rows, img_cols, 3)
 
-df = pd.read_csv("../data/dataframe.csv")
+DATA_DIR = "../data/"
+IMAGE_ARRAYS = DATA_DIR + "image_arrays.npy"
+LABEL_ARRAYS = DATA_DIR + "label_arrays.npy"
 
-# temp_X = np.array(df["Image Arrays"])
-# y = np.array(df["Name"])
-#
-# temp_X_train, temp_X_test, y_train, y_test = train_test_split(temp_X, y, test_size=0.3)
+X = np.load(IMAGE_ARRAYS, allow_pickle=True)
+y = np.load(LABEL_ARRAYS, allow_pickle=True)
 
+encoder = LabelBinarizer()
+y = encoder.fit_transform(y)
 
-# def breakdown(arr):
-#     X = []
-#     for category in arr:
-#         for photo in category:
-#             X.append(photo)
-#     return np.array(X)
-#
-#
-# X_train, X_test = breakdown(temp_X_train), breakdown(temp_X_test)
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-X = np.array(df["Image Arrays"])
-y = np.array(df["Name"])
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3)
+X_train = np.stack(x_train)
+X_test = np.stack(x_test)
 
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
@@ -54,8 +47,10 @@ model.fit(X_train, y_train,
           batch_size=BATCH_SIZE,
           epochs=EPOCHS,
           verbose=1,
-          validation_data=(X_test, y_test)
-          )
+          validation_data=(X_test, y_test))
+
 score = model.evaluate(X_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
+model.save("butterfly_classifier.h5")
