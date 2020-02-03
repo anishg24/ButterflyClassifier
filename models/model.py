@@ -6,18 +6,26 @@ from keras.models import Sequential
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
 
+from data.process_data import process
+
 BATCH_SIZE = 128
 NUM_CLASSES = 10
 EPOCHS = 12
 img_rows, img_cols = 128, 128
 input_shape = (img_rows, img_cols, 3)
 
-DATA_DIR = "../data/"
+DATA_DIR = "data/"
 IMAGE_ARRAYS = DATA_DIR + "image_arrays.npy"
 LABEL_ARRAYS = DATA_DIR + "label_arrays.npy"
 
-X = np.load(IMAGE_ARRAYS, allow_pickle=True)
-y = np.load(LABEL_ARRAYS, allow_pickle=True)
+try:
+    X = np.load(IMAGE_ARRAYS, allow_pickle=True)
+    y = np.load(LABEL_ARRAYS, allow_pickle=True)
+except FileNotFoundError:
+    print(f"Array labels not found! Creating new ones at {IMAGE_ARRAYS} and {LABEL_ARRAYS}.")
+    process()
+    X = np.load(IMAGE_ARRAYS, allow_pickle=True)
+    y = np.load(LABEL_ARRAYS, allow_pickle=True)
 
 encoder = LabelBinarizer()
 y = encoder.fit_transform(y)
@@ -43,14 +51,17 @@ model.compile(loss=K.losses.categorical_crossentropy,
               optimizer=K.optimizers.Adadelta(),
               metrics=['accuracy'])
 
-model.fit(X_train, y_train,
-          batch_size=BATCH_SIZE,
-          epochs=EPOCHS,
-          verbose=1,
-          validation_data=(X_test, y_test))
 
-score = model.evaluate(X_test, y_test, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
+def make_model():
+    model.fit(X_train, y_train,
+              batch_size=BATCH_SIZE,
+              epochs=EPOCHS,
+              verbose=1,
+              validation_data=(X_test, y_test))
+
+
+# score = model.evaluate(X_test, y_test, verbose=0)
+# print('Test loss:', score[0])
+# print('Test accuracy:', score[1])
 
 model.save("butterfly_classifier.h5")
