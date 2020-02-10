@@ -129,14 +129,17 @@ for doing all that by myself and it seemed to work in my favor.
 
 1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
 2. Download the dataset [here](https://www.kaggle.com/veeralakrishna/butterfly-dataset) and unzip the file in the `data/` folder of this repo. 
-   **DO NOT CHANGE THE FOLDER NAME FROM `leedsbutterfly/`**
+   **DO NOT CHANGE THE FOLDER NAME FROM **`leedsbutterfly/`
 3. `conda create venv`
 4. `conda activate venv`
 5. `conda install -r requirements.txt`
 6. `python main.py ~/PATH/TO/YOUR/IMAGE`
 
-Note: Neither the `.npy` files or the `.h5` files are **not** provided in this repo, as the file sizes are larger than 100 MB, so upon first run,
-the script should automatically create said files in its respective spots. Consecutive runs will be much quicker.
+Note: The `label_arrays.npy`, `image_arrays.npy`, and `butterfly_classifier.h5` files are **not** provided while cloning the repository.
+This means that upon the first run, the script will automatically generate those files, but it will consume time and resources.
+To get access to these files and quickly run the model, check out the [releases](https://github.com/anishg24/ButterflyClassifier/releases). 
+If you do decide to download the files and run the classifier, you don't need
+to use the dataset, and can safely delete it.
 
 ## Arguments
 Argument | Output
