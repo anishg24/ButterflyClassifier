@@ -147,6 +147,9 @@ Argument | Output
 - [ ] Data augmentation to improve accuracy of the models
 - [ ] Make a website that allows you to add images or take images of butterflies and tells you what species they are.
 
+## Releases
+- 1.0.0 (2/9/2020): First working release. More to come soon :smile:
+
 ## Contributing Members
 
 Creator: [Anish Govind](https://github.com/anishg24@gmail.com)
