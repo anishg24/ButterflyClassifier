@@ -18,50 +18,49 @@ DATA_DIR = "data/"
 IMAGE_ARRAYS = DATA_DIR + "image_arrays.npy"
 LABEL_ARRAYS = DATA_DIR + "label_arrays.npy"
 
-try:
-    X = np.load(IMAGE_ARRAYS, allow_pickle=True)
-    y = np.load(LABEL_ARRAYS, allow_pickle=True)
-except FileNotFoundError:
-    print(f"Array labels not found! Creating new ones at {IMAGE_ARRAYS} and {LABEL_ARRAYS}.")
-    process()
-    X = np.load(IMAGE_ARRAYS, allow_pickle=True)
-    y = np.load(LABEL_ARRAYS, allow_pickle=True)
-
-encoder = LabelBinarizer()
-y = encoder.fit_transform(y)
-
-x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-X_train = np.stack(x_train)
-X_test = np.stack(x_test)
-
-model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
-                 activation='relu',
-                 input_shape=input_shape))
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(NUM_CLASSES, activation='softmax'))
-
-model.compile(loss=K.losses.categorical_crossentropy,
-              optimizer=K.optimizers.Adadelta(),
-              metrics=['accuracy'])
-
 
 def make_model():
+    try:
+        X = np.load(IMAGE_ARRAYS, allow_pickle=True)
+        y = np.load(LABEL_ARRAYS, allow_pickle=True)
+    except FileNotFoundError:
+        print(f"Processed data not found! Creating files at {IMAGE_ARRAYS} and {LABEL_ARRAYS}.")
+        process()
+        X = np.load(IMAGE_ARRAYS, allow_pickle=True)
+        y = np.load(LABEL_ARRAYS, allow_pickle=True)
+
+    encoder = LabelBinarizer()
+    y = encoder.fit_transform(y)
+
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+    X_train = np.stack(x_train)
+    X_test = np.stack(x_test)
+
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=(3, 3),
+                     activation='relu',
+                     input_shape=input_shape))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(NUM_CLASSES, activation='softmax'))
+
+    model.compile(loss=K.losses.categorical_crossentropy,
+                  optimizer=K.optimizers.Adadelta(),
+                  metrics=['accuracy'])
+
     model.fit(X_train, y_train,
               batch_size=BATCH_SIZE,
               epochs=EPOCHS,
-              verbose=1,
+              verbose=2,
               validation_data=(X_test, y_test))
 
+    # score = model.evaluate(X_test, y_test, verbose=0)
+    # print('Test loss:', score[0])
+    # print('Test accuracy:', score[1])
 
-# score = model.evaluate(X_test, y_test, verbose=0)
-# print('Test loss:', score[0])
-# print('Test accuracy:', score[1])
-
-model.save("butterfly_classifier.h5")
+    model.save("models/butterfly_classifier.h5")

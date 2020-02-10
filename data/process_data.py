@@ -8,14 +8,15 @@ from skimage.transform import resize
 DATA_DIR = "data/leedsbutterfly"
 DESC_DIR = DATA_DIR + "/descriptions/"
 IMG_DIR = DATA_DIR + "/images/"
-array_save = "image_arrays.npy"
-label_save = "label_arrays.npy"
+array_save = "./data/image_arrays.npy"
+label_save = "./data/label_arrays.npy"
 
 
 def process():
+    if not os.path.isdir(DATA_DIR):
+        raise FileNotFoundError()
     my_dict = {
         "Scientific Name": [],
-        "Image Files": [],
         "Image Arrays": [],
     }
     for f in os.listdir(DESC_DIR):
@@ -24,7 +25,6 @@ def process():
             lines = d.readlines()
             for i in os.listdir(IMG_DIR):
                 if i.startswith(f[:3]):
-                    my_dict["Image Files"].append(i)
                     my_dict["Scientific Name"].append(lines[0].strip())
                     my_dict["Image Arrays"].append(resize(imread(IMG_DIR + i), (128, 128, 3)))
 
@@ -32,6 +32,4 @@ def process():
 
     np.save(array_save, df["Image Arrays"].values)
     np.save(label_save, df["Scientific Name"].values)
-
-
-print(f"Saved the image arrays to {array_save} and the labels to {label_save}")
+    print(f"Saved the image arrays to {array_save} and the labels to {label_save}")
