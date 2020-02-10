@@ -6,7 +6,7 @@ this project wouldn't be published
 ![GitHub followers](https://img.shields.io/github/followers/anishg24?label=Follow&style=social)
 
 ![Status](https://img.shields.io/badge/status-completed-brightgreen?style=flat-square)
-![Version](https://img.shields.io/badge/version-1.0.0-red?style=flat-square)
+![Version](https://img.shields.io/github/v/release/anishg24/ButterflyClassifier?color=orange&style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/anishg24/ButterflyClassifier?style=flat-square)
 
 ## Project Objective
