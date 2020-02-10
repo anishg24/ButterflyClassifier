@@ -3,7 +3,11 @@ This project is made by Anish Govind. Other projects can be found at my [GitHub]
 Huge thank you to the contributors behind this [dataset](https://www.kaggle.com/veeralakrishna/butterfly-dataset) as without it
 this project wouldn't be published
 
-![](https://img.shields.io/badge/project%20status-In%20Progress-yellowgreen)
+![GitHub followers](https://img.shields.io/github/followers/anishg24?label=Follow&style=social)
+
+![Status](https://img.shields.io/badge/status-completed-brightgreen?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.0.0-red?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/anishg24/ButterflyClassifier?style=flat-square)
 
 ## Project Objective
 The purpose of this project is to classify between 10 species of butterflies based of a picture of a butterfly. Butterflies are important and crucial to our ecosystem. 
@@ -43,7 +47,7 @@ Running the model based off another species will **not** produce an error, but i
 ## Project Description
 This project was developed off the data (provided [here](https://www.kaggle.com/veeralakrishna/butterfly-dataset)) which consisted
 of 10 text files and ~800 images of butterflies. The data is marked in the way that the file name is the first 3 digits of the 
-image file (a butterfly from 001.txt would have image 0010001.png). Armed with this, a couple of iterative sequences is able
+image file (a butterfly from `001.txt` would have image `0010001.png`). Armed with this, a couple of iterative sequences is able
 to populate a dictionary with 2 pieces of information: Scientific Name and the Image Array.
 
 Initially, the dictionary was structured as such:
