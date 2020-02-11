@@ -145,17 +145,23 @@ to use the dataset, and can safely delete it.
 Argument | Output
 ------------ | -------------
 `~/PATH/TO/YOUR/IMAGE` | ["Scientific Name", "Common Name", "Brief Description"]
+`-h` `--help` | Show a help message and exit
+`-r` `--retrain` | Retrains the model and runs the new model to predict off the given image. The new model gets saved in a file.
+`-b` `--batch_size` | Changes the default batch size from 128 to user input
+`-e` `--epochs` | Changes the default epoch size from 12 to user input
+`-t` `--test_size` | Changes the default test proportion from 0.2 (20%) to user input.
 
 ## To-Do
 - [x] Preprocess dataset
 - [x] Create the model and save it
 - [x] Make a working script to run everything and predict
-- [ ] Add the ability to retrain the model with new user input
+- [x] Add the ability to retrain the model with new user input
 - [ ] Data augmentation to improve accuracy of the models
 - [ ] Make a website that allows you to add images or take images of butterflies and tells you what species they are.
 
 ## Releases
 - 1.0.0 (2/9/2020): First working release. More to come soon :smile:
+- 1.2.0 (2/11/2020): Added command line arguments.
 
 ## Contributing Members
 

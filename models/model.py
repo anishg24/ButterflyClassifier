@@ -19,7 +19,7 @@ IMAGE_ARRAYS = DATA_DIR + "image_arrays.npy"
 LABEL_ARRAYS = DATA_DIR + "label_arrays.npy"
 
 
-def make_model():
+def make_model(bs=BATCH_SIZE, e=EPOCHS, ts=0.2):
     try:
         X = np.load(IMAGE_ARRAYS, allow_pickle=True)
         y = np.load(LABEL_ARRAYS, allow_pickle=True)
@@ -32,7 +32,7 @@ def make_model():
     encoder = LabelBinarizer()
     y = encoder.fit_transform(y)
 
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=ts)
 
     X_train = np.stack(x_train)
     X_test = np.stack(x_test)
@@ -54,8 +54,8 @@ def make_model():
                   metrics=['accuracy'])
 
     model.fit(X_train, y_train,
-              batch_size=BATCH_SIZE,
-              epochs=EPOCHS,
+              batch_size=bs,
+              epochs=e,
               verbose=2,
               validation_data=(X_test, y_test))
 
@@ -64,3 +64,4 @@ def make_model():
     # print('Test accuracy:', score[1])
 
     model.save("models/butterfly_classifier.h5")
+    return model

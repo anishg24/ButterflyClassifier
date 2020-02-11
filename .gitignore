@@ -6,3 +6,4 @@
 *.pyc
 *.xml
 *.iml
+/venv/
