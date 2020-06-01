@@ -129,7 +129,7 @@ for doing all that by myself and it seemed to work in my favor.
 
 1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
 2. Download the dataset [here](https://www.kaggle.com/veeralakrishna/butterfly-dataset) and unzip the file in the `data/` folder of this repo. 
-   **DO NOT CHANGE THE FOLDER NAME FROM **`leedsbutterfly/`
+**DO NOT CHANGE THE FOLDER NAME FROM ** `leedsbutterfly/`
 3. `conda create venv`
 4. `conda activate venv`
 5. `conda install -r requirements.txt`
